@@ -1,13 +1,13 @@
 import 'dotenv/config';
 
-import TelegramBot from './src/classes/TelegramBot.mjs';
-import Olx from './src/classes/Olx.mjs';
-import FlatsStorage from './src/classes/FlatsStorage.mjs';
-import MessageFactory from './src/classes/MessageFactory.mjs';
-import LocationsStorage from './src/classes/LocationsStorage.mjs';
+import TelegramBot from './src/classes/TelegramBot.js';
+import Olx from './src/classes/Olx.js';
+import FlatsStorage from './src/classes/FlatsStorage.js';
+import MessageFactory from './src/classes/MessageFactory.js';
+import LocationsStorage from './src/classes/LocationsStorage.js';
 
 ///
-console.log(`App started`);
+console.log(`Olx bot started`);
 const start = performance.now();
 
 const flatsStorage = new FlatsStorage('./data/flats_ids.json');
@@ -45,4 +45,4 @@ newFlats.forEach((flat) => {
 flatsStorage.saveStorage();
 
 const end = performance.now();
-console.log(`App finished. Execution time: ${end - start} ms`);
+console.log(`Bot job finished. Execution time: ${end - start} ms`);
