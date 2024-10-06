@@ -45,4 +45,6 @@ newFlats.forEach((flat) => {
 flatsStorage.saveStorage();
 
 const end = performance.now();
-console.log(`Bot job finished. Execution time: ${end - start} ms`);
+const executionTime = ((end - start) / 1000).toFixed(2);
+
+console.log(`Bot job finished. Execution time: ${executionTime} s`);
