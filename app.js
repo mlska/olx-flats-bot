@@ -1,50 +1,24 @@
 import 'dotenv/config';
+import cron from 'node-cron';
+import OlxBot from './src/OlxBot.js';
 
-import TelegramBot from './src/classes/TelegramBot.js';
-import Olx from './src/classes/Olx.js';
-import FlatsStorage from './src/classes/FlatsStorage.js';
-import MessageFactory from './src/classes/MessageFactory.js';
-import LocationsStorage from './src/classes/LocationsStorage.js';
-
-///
 console.log(`Olx bot started`);
-const start = performance.now();
-
-const flatsStorage = new FlatsStorage('./data/flats_ids.json');
-const locationsStorage = new LocationsStorage('./data/locations_urls.json');
-const telegramBot = new TelegramBot(process.env.TELEGRAM_TOKEN);
-const messageFactory = new MessageFactory();
-const olx = new Olx();
-
-const urls = locationsStorage.getUrls();
-
-await olx.open();
-
-const flats = [];
-for (const i in urls) {
-  const data = await olx.getFlats(urls[i]);
-  flats.push(...data);
-}
-
-await olx.close();
-
-const newFlats = flats.filter((flat) => !flatsStorage.checkId(flat.id));
-
-console.log(`${newFlats.length} nowych mieszkań`);
-
-if (newFlats.length === 0) {
-  telegramBot.sendMessage(process.env.USER_ID, `Brak nowych mieszkań`);
-}
-
-newFlats.forEach((flat) => {
-  flatsStorage.addId(flat.id);
-  const message = messageFactory.createMessage(flat);
-  telegramBot.sendMessage(process.env.USER_ID, message);
+const olxBot = new OlxBot({
+  flatsStorageFilePath: './data/flats_ids.json',
+  locationsStorageFilePath: './data/locations_urls.json',
+  telegramToken: process.env.TELEGRAM_TOKEN,
+  messageReceiver: process.env.USER_ID
 });
 
-flatsStorage.saveStorage();
+cron.schedule('0 7,12,17,22 * * *', async () => {
+  console.log(`Scraping started`);
 
-const end = performance.now();
-const executionTime = ((end - start) / 1000).toFixed(2);
+  const start = performance.now();
 
-console.log(`Bot job finished. Execution time: ${executionTime} s`);
+  await olxBot.scrap();
+
+  const end = performance.now();
+  const executionTime = ((end - start) / 1000).toFixed(2);
+
+  console.log(`Scraping finished. Execution time: ${executionTime} s`);
+});
