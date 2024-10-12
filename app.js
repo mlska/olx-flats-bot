@@ -2,7 +2,6 @@ import 'dotenv/config';
 import cron from 'node-cron';
 import OlxBot from './src/OlxBot.js';
 
-console.log(`Olx bot started`);
 const olxBot = new OlxBot({
   flatsStorageFilePath: './data/flats_ids.json',
   locationsStorageFilePath: './data/locations_urls.json',
