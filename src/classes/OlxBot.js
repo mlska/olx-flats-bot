@@ -44,7 +44,7 @@ export default class OlxBot {
     console.log(`${newFlats.length} nowych mieszkań`);
 
     if (newFlats.length === 0) {
-      return newFlats.length;
+      this.telegram.sendMessage(this.messageReceiver, `Brak nowych mieszkań`);
     }
 
     newFlats.forEach((flat) => {

@@ -12,7 +12,7 @@ export default class Olx {
     this.browser = await puppeteer.launch({
       headless: true,
       executablePath,
-      args: ['--no-sandbox', '--disabled-setupid-sandbox']
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     this.page = await this.browser.newPage();
   }
@@ -43,7 +43,6 @@ export default class Olx {
         return { id, link, title, price, square, location, date };
       });
     });
-
     return flats;
   }
 }

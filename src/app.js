@@ -15,10 +15,9 @@ cron.schedule('0 7,12,17,22 * * *', () => {
   olxBot.scrap();
 });
 
-olxBot.telegram.startCommandListener('@scrap', async () => {
+olxBot.telegram.startCommandListener('@scrap', () => {
   olxBot.telegram.sendMessage(messageReceiver, `Manual scraping`);
-  const newFlats = await olxBot.scrap();
-  !newFlats && olxBot.telegram.sendMessage(messageReceiver, `Brak nowych mieszkań`);
+  olxBot.scrap();
 });
 
 olxBot.telegram.startCommandListener('@status', () => {
