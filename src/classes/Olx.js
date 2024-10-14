@@ -1,4 +1,5 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import locateChrome from 'locate-chrome';
 
 export default class Olx {
   constructor() {
@@ -6,7 +7,13 @@ export default class Olx {
   }
 
   async open() {
-    this.browser = await puppeteer.launch();
+    const executablePath = await locateChrome();
+
+    this.browser = await puppeteer.launch({
+      headless: true,
+      executablePath,
+      args: ['--no-sandbox', '--disabled-setupid-sandbox']
+    });
     this.page = await this.browser.newPage();
   }
 

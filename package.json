@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "app.js",
+  "main": "./src/app.js",
   "scripts": {
     "pm2": "pm2 start processes.json --no-daemon",
-    "start": "node app.js",
+    "start": "node ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,8 +15,9 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "grammy": "^1.30.0",
+    "locate-chrome": "^0.1.1",
     "node-cron": "^3.0.3",
     "pm2": "^5.4.2",
-    "puppeteer": "^23.4.1"
+    "puppeteer-core": "^23.5.3"
   }
 }
