@@ -39,7 +39,9 @@ export default class OlxBot {
 
     await olx.close();
 
-    const newFlats = getUniqueListBy(flats.filter((flat) => !this.flatsStorage.checkId(flat.id)));
+    const newFlats = getUniqueListBy(flats, 'id').filter(
+      (flat) => !this.flatsStorage.checkId(flat.id)
+    );
 
     console.log(`${newFlats.length} nowych mieszkań`);
 
