@@ -11,8 +11,8 @@ export default class Telegram {
   }
 
   startCommandListener(command, callback) {
-    this.bot.hears(command, async (ctx) => {
-      callback();
+    this.bot.hears(command, (ctx) => {
+      callback(ctx);
     });
   }
 
