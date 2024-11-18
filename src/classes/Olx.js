@@ -27,7 +27,7 @@ export default class Olx {
     const flats = await list.$$eval('[data-cy="l-card"]', (items) => {
       return items.map((i) => {
         const id = i.getAttribute('id');
-        const title = i.querySelector('h6').innerText;
+        const title = i.querySelector('h4').innerText;
         let link = i.querySelector('a').getAttribute('href');
         if (!link.includes('https')) {
           link = 'https://www.olx.pl' + link;
